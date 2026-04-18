@@ -3,717 +3,491 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Container Fast & Good - Degustação 22/04</title>
+    <title>Container Fast & Good - Sorteio de Kit Marmitas</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #f0f9f4 0%, #e8f5f0 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f0fa 0%, #e8dff5 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 1rem;
+            padding: 20px;
         }
-        
+
         .container {
             background: white;
             border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 2rem;
-            max-width: 400px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 500px;
             width: 100%;
         }
-        
+
         .header {
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 30px;
         }
-        
+
         .logo {
-            font-size: 32px;
-            margin-bottom: 0.5rem;
+            margin-bottom: 20px;
         }
-        
+
+        .logo img {
+            max-width: 140px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
         .title {
             font-size: 24px;
-            font-weight: 600;
-            color: #1a5e3f;
-            margin-bottom: 0.5rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            line-height: 1.3;
         }
-        
+
         .subtitle {
             font-size: 14px;
-            color: #666;
+            color: #7f8c8d;
+            line-height: 1.5;
         }
-        
+
         .divider {
             height: 2px;
-            background: linear-gradient(90deg, #4CAF50 0%, transparent 100%);
-            margin: 1.5rem 0;
+            background: linear-gradient(90deg, #6b2d7d 0%, transparent 100%);
+            margin: 25px 0;
         }
-        
+
+        .step-indicator {
+            text-align: center;
+            font-size: 13px;
+            color: #95a5a6;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .form-step {
+            display: none;
+        }
+
+        .form-step.active {
+            display: block;
+        }
+
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 20px;
         }
-        
+
         label {
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 8px;
             font-size: 14px;
             font-weight: 600;
-            color: #333;
+            color: #2c3e50;
         }
-        
+
         input {
             width: 100%;
-            padding: 12px;
+            padding: 12px 14px;
             border: 1.5px solid #ddd;
             border-radius: 6px;
-            font-size: 16px;
-            transition: border-color 0.3s;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            font-family: inherit;
         }
-        
+
         input:focus {
             outline: none;
-            border-color: #4CAF50;
-            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+            border-color: #6b2d7d;
+            box-shadow: 0 0 0 3px rgba(107, 45, 125, 0.1);
         }
-        
+
+        input::placeholder {
+            color: #bdc3c7;
+        }
+
         button {
             width: 100%;
             padding: 12px;
-            background: #4CAF50;
+            background: #6b2d7d;
             color: white;
             border: none;
             border-radius: 6px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: all 0.3s ease;
+            margin-top: 10px;
         }
-        
+
         button:hover {
-            background: #45a049;
+            background: #522150;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(107, 45, 125, 0.3);
         }
-        
+
         button:active {
-            transform: scale(0.98);
+            transform: translateY(0);
         }
-        
-        .success-message {
-            display: none;
-            background: #e8f5e9;
-            color: #2e7d32;
-            padding: 1rem;
-            border-radius: 6px;
-            margin-bottom: 1rem;
-            text-align: center;
-            font-size: 14px;
-            font-weight: 600;
-        }
-        
-        .entries-section {
-            margin-top: 2.5rem;
-            padding-top: 2rem;
-            border-top: 1px solid #eee;
-        }
-        
-        .entries-title {
-            font-size: 14px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 1rem;
-        }
-        
-        .entries-list {
-            max-height: 200px;
-            overflow-y: auto;
-            margin-bottom: 1rem;
-        }
-        
-        .entry {
-            background: #f5f5f5;
-            padding: 0.75rem;
-            border-radius: 6px;
-            margin-bottom: 0.5rem;
-            font-size: 13px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .entry-info {
-            flex: 1;
-        }
-        
-        .entry-name {
-            font-weight: 600;
-            color: #333;
-        }
-        
-        .entry-phone {
-            color: #666;
-            font-size: 12px;
-        }
-        
-        .entry-delete {
-            background: #ff6b6b;
-            color: white;
-            border: none;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 11px;
-            cursor: pointer;
-            margin-left: 0.5rem;
-        }
-        
-        .entry-delete:hover {
-            background: #ff5252;
-        }
-        
-        .export-buttons {
-            display: flex;
-            gap: 0.75rem;
-        }
-        
-        .export-btn {
-            flex: 1;
-            padding: 10px;
-            background: #2196F3;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        
-        .export-btn:hover {
-            background: #1976D2;
-        }
-        
-        .clear-btn {
-            flex: 1;
-            padding: 10px;
-            background: #ff6b6b;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        
-        .clear-btn:hover {
-            background: #ff5252;
-        }
-        
-        .counter {
-            font-size: 13px;
-            color: #666;
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-        
-        .counter strong {
-            color: #4CAF50;
-            font-size: 18px;
-        }
-        
-        .step-indicator {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 2rem;
-            gap: 1rem;
-        }
-        
-        .step {
-            flex: 1;
-            text-align: center;
-            position: relative;
-        }
-        
-        .step-number {
-            width: 36px;
-            height: 36px;
-            background: #e0e0e0;
-            color: #999;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            margin: 0 auto 0.5rem;
-            font-size: 14px;
-        }
-        
-        .step.active .step-number {
-            background: #4CAF50;
-            color: white;
-        }
-        
-        .step.completed .step-number {
-            background: #2e7d32;
-            color: white;
-        }
-        
-        .step-label {
-            font-size: 11px;
-            color: #666;
-            font-weight: 500;
-        }
-        
-        .step.active .step-label {
-            color: #4CAF50;
-            font-weight: 600;
-        }
-        
-        .form-section {
-            display: none;
-        }
-        
-        .form-section.active {
-            display: block;
-        }
-        
-        .instagram-cta {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 1.5rem;
-            border-radius: 8px;
-            text-align: center;
-            margin: 2rem 0;
-        }
-        
-        .instagram-cta-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-        
-        .instagram-cta-subtitle {
-            font-size: 13px;
-            opacity: 0.9;
-            margin-bottom: 1rem;
-        }
-        
-        .instagram-btn {
-            background: white;
-            color: #764ba2;
-            padding: 12px 24px;
-            border: none;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 15px;
-            cursor: pointer;
-            transition: transform 0.2s;
+
+        .instagram-link {
             display: inline-block;
-        }
-        
-        .instagram-btn:hover {
-            transform: scale(1.05);
-        }
-        
-        .instagram-btn:active {
-            transform: scale(0.98);
-        }
-        
-        .confirmed-badge {
-            background: #e8f5e9;
-            color: #2e7d32;
+            margin-top: 10px;
             padding: 8px 12px;
-            border-radius: 6px;
-            display: inline-block;
-            margin-top: 0.5rem;
-            font-size: 12px;
+            background: #E1306C;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 13px;
             font-weight: 600;
+            transition: background 0.3s;
         }
-        
-        .nav-buttons {
-            display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
+
+        .instagram-link:hover {
+            background: #c9175b;
         }
-        
-        .btn-back {
-            flex: 1;
-            padding: 12px;
-            background: #e0e0e0;
-            color: #333;
-            border: none;
-            border-radius: 6px;
+
+        .confirmation {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .confirmation h2 {
+            color: #155724;
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .confirmation p {
+            color: #155724;
             font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
+            line-height: 1.5;
         }
-        
-        .btn-back:hover {
-            background: #d0d0d0;
+
+        .admin-panel {
+            margin-top: 40px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #6b2d7d;
         }
-        
-        .btn-next {
-            flex: 1;
-            padding: 12px;
-            background: #4CAF50;
+
+        .admin-panel h3 {
+            color: #2c3e50;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .counter {
+            text-align: center;
+            font-size: 32px;
+            font-weight: bold;
+            color: #6b2d7d;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 6px;
+        }
+
+        .participant-list {
+            max-height: 300px;
+            overflow-y: auto;
+            background: white;
+            border-radius: 6px;
+            padding: 10px;
+            margin-bottom: 15px;
+        }
+
+        .participant-item {
+            padding: 10px;
+            margin-bottom: 8px;
+            background: #fff;
+            border-left: 3px solid #6b2d7d;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #2c3e50;
+        }
+
+        .admin-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .admin-btn {
+            padding: 10px;
+            background: #95a5a6;
             color: white;
             border: none;
             border-radius: 6px;
-            font-size: 14px;
-            font-weight: 600;
             cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: background 0.3s;
         }
-        
-        .btn-next:hover {
-            background: #45a049;
+
+        .admin-btn:hover {
+            background: #7f8c8d;
         }
-        
-        .btn-next:disabled {
-            background: #ccc;
-            cursor: not-allowed;
+
+        .clear-btn {
+            background: #e74c3c;
+        }
+
+        .clear-btn:hover {
+            background: #c0392b;
+        }
+
+        .hidden {
+            display: none;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <div class="logo">🍱</div>
-            <h1 class="title">Container Fast & Good</h1>
-            <p class="subtitle">Degustação 22/04 — Academia</p>
+            <div class="logo">
+                <img src="logo_container.jpg" alt="Container Fast & Good">
+            </div>
+            <h1 class="title">Lista de Participação</h1>
+            <p class="subtitle">Sorteio de kit marmitas - Degustação inauguração BW Imirim</p>
         </div>
-        
+
         <div class="divider"></div>
-        
+
         <div class="step-indicator">
-            <div class="step completed" id="step1-indicator">
-                <div class="step-number">✓</div>
-                <div class="step-label">Dados</div>
-            </div>
-            <div class="step completed" id="step2-indicator">
-                <div class="step-number">✓</div>
-                <div class="step-label">Instagram</div>
-            </div>
-            <div class="step active" id="step3-indicator">
-                <div class="step-number">3</div>
-                <div class="step-label">Sorteio</div>
-            </div>
+            <span id="stepText">Passo 1 de 3</span>
         </div>
-        
-        <div class="success-message" id="successMessage">
-            ✓ Parabéns! Você foi cadastrado! Boa sorte no sorteio! 🎉
-        </div>
-        
-        <div class="form-section active" id="step1">
-            <form id="formDados">
-                <div class="form-group">
-                    <label for="nome">Seu nome *</label>
-                    <input 
-                        type="text" 
-                        id="nome" 
-                        name="nome" 
-                        placeholder="Ex: João Silva"
-                        required
-                        autocomplete="name"
-                    >
-                </div>
-                
-                <div class="form-group">
-                    <label for="telefone">Seu telefone (WhatsApp) *</label>
-                    <input 
-                        type="tel" 
-                        id="telefone" 
-                        name="telefone" 
-                        placeholder="Ex: (11) 99999-9999"
-                        required
-                        autocomplete="tel"
-                    >
-                </div>
-                
-                <button type="submit" class="btn-next" style="width: 100%;">Próximo →</button>
-            </form>
-        </div>
-        
-        <div class="form-section" id="step2">
-            <div style="text-align: center; margin-bottom: 1rem;">
-                <p style="font-size: 14px; color: #666; margin-bottom: 1rem;">Ótimo! Agora siga nosso Instagram para garantir sua participação no sorteio.</p>
-                <p style="font-size: 13px; color: #999; margin-bottom: 1.5rem;">Clique no botão abaixo para nos seguir (será aberto em outro abas)</p>
+
+        <!-- STEP 1: Dados Básicos -->
+        <div class="form-step active" id="step1">
+            <div class="form-group">
+                <label for="nome">Nome completo *</label>
+                <input type="text" id="nome" placeholder="Seu nome" required>
             </div>
-            
-            <div class="instagram-cta">
-                <div class="instagram-cta-title">📸 Siga a gente no Instagram</div>
-                <div class="instagram-cta-subtitle">@containerfastgood</div>
-                <button class="instagram-btn" onclick="abrirInstagram()">Seguir agora</button>
-                <div class="confirmed-badge" id="instagramConfirmed" style="display: none;">✓ Confirmado!</div>
+            <div class="form-group">
+                <label for="telefone">Telefone *</label>
+                <input type="tel" id="telefone" placeholder="(11) 99999-9999" required>
             </div>
-            
-            <div style="background: #f5f5f5; padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem;">
-                <p style="font-size: 13px; color: #666; margin: 0; line-height: 1.6;">
-                    <strong>Já está seguindo?</strong> Clique no botão abaixo para continuar. 👇
+            <button onclick="proximoStep()">Continuar</button>
+        </div>
+
+        <!-- STEP 2: Instagram -->
+        <div class="form-step" id="step2">
+            <div class="form-group">
+                <p style="color: #2c3e50; margin-bottom: 15px; font-weight: 500;">
+                    ✅ Siga nosso Instagram para concorrer ao sorteio:
+                </p>
+                <a href="https://www.instagram.com/containerfastgood/" target="_blank" class="instagram-link">
+                    🔗 @containerfastgood
+                </a>
+                <p style="color: #7f8c8d; font-size: 13px; margin-top: 12px;">
+                    Clique no link acima, siga nossa conta e depois clique em "Continuar" abaixo.
                 </p>
             </div>
-            
-            <div class="nav-buttons">
-                <button class="btn-back" onclick="voltarStep(1)">← Voltar</button>
-                <button class="btn-next" id="btnContinuarInstagram" onclick="proximoStep(3)" disabled>Continuar</button>
-            </div>
+            <button onclick="proximoStep()">Continuar</button>
         </div>
-        
-        <div class="form-section" id="step3">
-            <div style="text-align: center; margin-bottom: 2rem;">
-                <div style="font-size: 48px; margin-bottom: 1rem;">🎁</div>
-                <h2 style="font-size: 20px; font-weight: 600; color: #1a5e3f; margin-bottom: 0.5rem;">Você está no sorteio!</h2>
-                <p style="font-size: 14px; color: #666; line-height: 1.6;">
-                    Pronto! Seus dados foram registrados e você já está participando do sorteio de 2 kits de marmitas grátis! 🍱
+
+        <!-- STEP 3: Confirmação -->
+        <div class="form-step" id="step3">
+            <div class="confirmation">
+                <h2>🎉 Parabéns!</h2>
+                <p>Você foi registrado no sorteio!</p>
+            </div>
+            <div class="form-group">
+                <p style="color: #2c3e50; font-size: 14px; text-align: center;">
+                    <strong>Nome:</strong> <span id="nomeFinal"></span><br>
+                    <strong>Telefone:</strong> <span id="telefoneFinal"></span>
                 </p>
             </div>
-            
-            <div style="background: #e8f5e9; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; border-left: 4px solid #4CAF50;">
-                <p style="font-size: 13px; color: #2e7d32; margin: 0; line-height: 1.6;">
-                    <strong>✓ Nome:</strong> <span id="displayNome"></span><br>
-                    <strong>✓ Telefone:</strong> <span id="displayTelefone"></span><br>
-                    <strong>✓ Instagram:</strong> <span id="displayInsta">@containerfastgood</span>
-                </p>
-            </div>
-            
-            <div style="background: #fff3cd; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
-                <p style="font-size: 12px; color: #856404; margin: 0; line-height: 1.6;">
-                    🎯 <strong>Resultado do sorteio será no dia 22/04 à noite!</strong><br>
-                    Fique ligado no nosso Instagram para saber se você foi escolhido! 📲
-                </p>
-            </div>
-            
-            <button class="btn-next" onclick="novoParticipante()" style="width: 100%;">+ Novo participante</button>
+            <button onclick="reiniciarFormulario()" style="background: #6b2d7d;">Registrar Novo Participante</button>
         </div>
-        
-        <div class="entries-section">
+
+        <!-- PAINEL ADMINISTRATIVO -->
+        <div class="admin-panel">
+            <h3>📊 Painel Administrativo</h3>
+            
             <div class="counter">
-                Total de participantes: <strong id="totalEntries">0</strong>
+                <span id="totalParticipantes">0</span>
             </div>
-            
-            <div class="entries-title">Últimos cadastros:</div>
-            <div class="entries-list" id="entriesList"></div>
-            
-            <div class="export-buttons">
-                <button class="export-btn" onclick="exportToCSV()">
-                    📊 Exportar CSV
-                </button>
-                <button class="export-btn" onclick="copyToClipboard()">
-                    📋 Copiar Lista
-                </button>
-                <button class="clear-btn" onclick="clearAllData()">
-                    🗑️ Limpar Tudo
-                </button>
+
+            <p style="font-size: 13px; color: #7f8c8d; margin-bottom: 10px;">Últimos registros:</p>
+            <div class="participant-list" id="participantList">
+                <p style="color: #95a5a6; font-size: 13px; padding: 10px;">Nenhum registro ainda.</p>
+            </div>
+
+            <div class="admin-buttons">
+                <button class="admin-btn" onclick="exportarCSV()">📥 Exportar CSV</button>
+                <button class="admin-btn" onclick="copiarLista()">📋 Copiar Lista</button>
+                <button class="admin-btn clear-btn" onclick="confirmarLimpeza()">🗑️ Limpar Tudo</button>
             </div>
         </div>
     </div>
-    
+
     <script>
-        const STORAGE_KEY = 'container_degustacao_entries';
-        let currentStep = 1;
-        let formData = {};
-        
-        function proximoStep(step) {
-            currentStep = step;
-            updateStepIndicator();
-            showStep(step);
-            window.scrollTo(0, 0);
-        }
-        
-        function voltarStep(step) {
-            currentStep = step;
-            updateStepIndicator();
-            showStep(step);
-            formData.instagram_confirmed = false;
-            document.getElementById('btnContinuarInstagram').disabled = true;
-            document.getElementById('instagramConfirmed').style.display = 'none';
-            window.scrollTo(0, 0);
-        }
-        
-        function showStep(step) {
-            document.querySelectorAll('.form-section').forEach(el => el.classList.remove('active'));
-            document.getElementById('step' + step).classList.add('active');
-        }
-        
-        function updateStepIndicator() {
-            for (let i = 1; i <= 3; i++) {
-                const indicator = document.getElementById('step' + i + '-indicator');
-                indicator.classList.remove('active', 'completed');
-                if (i < currentStep) {
-                    indicator.classList.add('completed');
-                } else if (i === currentStep) {
-                    indicator.classList.add('active');
+        // Dados em memória (Local Storage)
+        let participantes = [];
+
+        // Carregar dados ao abrir página
+        window.addEventListener('load', () => {
+            carregarDados();
+        });
+
+        function carregarDados() {
+            try {
+                const dados = localStorage.getItem('degustacao_participantes');
+                if (dados) {
+                    participantes = JSON.parse(dados);
                 }
+            } catch (e) {
+                console.log('Usando memória temporária');
+                participantes = [];
+            }
+            atualizarPainel();
+        }
+
+        function salvarDados() {
+            try {
+                localStorage.setItem('degustacao_participantes', JSON.stringify(participantes));
+            } catch (e) {
+                console.log('Dados salvos em memória temporária');
             }
         }
-        
-        function novoParticipante() {
-            currentStep = 1;
-            formData = {};
-            document.getElementById('formDados').reset();
-            document.getElementById('btnContinuarInstagram').disabled = true;
-            document.getElementById('instagramConfirmed').style.display = 'none';
-            updateStepIndicator();
-            showStep(1);
-            document.getElementById('nome').focus();
-            window.scrollTo(0, 0);
-        }
-        
-        function abrirInstagram() {
-            window.open('https://instagram.com/containerfastgood', '_blank');
-            setTimeout(() => {
-                document.getElementById('instagramConfirmed').style.display = 'inline-block';
-                document.getElementById('btnContinuarInstagram').disabled = false;
-            }, 500);
-        }
-        
-        function loadEntries() {
-            const stored = localStorage.getItem(STORAGE_KEY);
-            return stored ? JSON.parse(stored) : [];
-        }
-        
-        function saveEntries(entries) {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
-            updateDisplay();
-        }
-        
-        function formatPhone(phone) {
-            const cleaned = phone.replace(/\D/g, '');
-            if (cleaned.length === 11) {
-                return `(${cleaned.slice(0, 2)}) ${cleaned.slice(2, 7)}-${cleaned.slice(7)}`;
+
+        function proximoStep() {
+            const stepAtual = document.querySelector('.form-step.active');
+            const stepAtualNum = parseInt(stepAtual.id.replace('step', ''));
+
+            if (stepAtualNum === 1) {
+                const nome = document.getElementById('nome').value.trim();
+                const telefone = document.getElementById('telefone').value.trim();
+
+                if (!nome || !telefone) {
+                    alert('Por favor, preencha todos os campos!');
+                    return;
+                }
+
+                document.getElementById('stepText').textContent = 'Passo 2 de 3';
+            } else if (stepAtualNum === 2) {
+                const nome = document.getElementById('nome').value.trim();
+                const telefone = formatarTelefone(document.getElementById('telefone').value.trim());
+
+                // Salvar participante
+                participantes.push({
+                    nome: nome,
+                    telefone: telefone,
+                    instagram: '@containerfastgood',
+                    data: new Date().toLocaleString('pt-BR')
+                });
+                salvarDados();
+
+                // Mostrar confirmação
+                document.getElementById('nomeFinal').textContent = nome;
+                document.getElementById('telefoneFinal').textContent = telefone;
+                document.getElementById('stepText').textContent = 'Passo 3 de 3';
+                atualizarPainel();
             }
-            return phone;
+
+            // Esconder passo atual e mostrar próximo
+            stepAtual.classList.remove('active');
+            const proximoNum = stepAtualNum + 1;
+            if (document.getElementById(`step${proximoNum}`)) {
+                document.getElementById(`step${proximoNum}`).classList.add('active');
+            }
         }
-        
-        function addEntry(nome, telefone) {
-            const entries = loadEntries();
-            entries.push({
-                id: Date.now(),
-                nome: nome.trim(),
-                telefone: formatPhone(telefone),
-                timestamp: new Date().toLocaleString('pt-BR'),
-                instagram: '@containerfastgood'
-            });
-            saveEntries(entries);
+
+        function reiniciarFormulario() {
+            document.querySelectorAll('.form-step').forEach(step => step.classList.remove('active'));
+            document.getElementById('step1').classList.add('active');
+            document.getElementById('stepText').textContent = 'Passo 1 de 3';
+            document.getElementById('nome').value = '';
+            document.getElementById('telefone').value = '';
         }
-        
-        function deleteEntry(id) {
-            const entries = loadEntries();
-            const filtered = entries.filter(e => e.id !== id);
-            saveEntries(filtered);
+
+        function formatarTelefone(tel) {
+            return tel.replace(/\D/g, '').replace(/(\d{2})(\d{4,5})(\d{4})/, '($1) $2-$3');
         }
-        
-        function updateDisplay() {
-            const entries = loadEntries();
-            const list = document.getElementById('entriesList');
-            const total = document.getElementById('totalEntries');
-            
-            total.textContent = entries.length;
-            
-            list.innerHTML = entries
-                .reverse()
-                .slice(0, 10)
-                .map(entry => `
-                    <div class="entry">
-                        <div class="entry-info">
-                            <div class="entry-name">${entry.nome}</div>
-                            <div class="entry-phone">${entry.telefone}</div>
-                        </div>
-                        <button class="entry-delete" onclick="deleteEntry(${entry.id})">Remover</button>
-                    </div>
-                `).join('');
-        }
-        
-        function exportToCSV() {
-            const entries = loadEntries();
-            if (entries.length === 0) {
-                alert('Nenhum dado para exportar!');
+
+        function atualizarPainel() {
+            document.getElementById('totalParticipantes').textContent = participantes.length;
+
+            const lista = document.getElementById('participantList');
+            if (participantes.length === 0) {
+                lista.innerHTML = '<p style="color: #95a5a6; font-size: 13px; padding: 10px;">Nenhum registro ainda.</p>';
                 return;
             }
-            
-            let csv = 'Nome,Telefone,Instagram,Data/Hora\n';
-            entries.forEach(entry => {
-                csv += `"${entry.nome}","${entry.telefone}","${entry.instagram}","${entry.timestamp}"\n`;
+
+            // Mostrar últimos 10
+            const ultimos = participantes.slice(-10).reverse();
+            lista.innerHTML = ultimos.map((p, idx) => `
+                <div class="participant-item">
+                    <strong>${p.nome}</strong><br>
+                    ${p.telefone} | ${p.data}
+                </div>
+            `).join('');
+        }
+
+        function exportarCSV() {
+            if (participantes.length === 0) {
+                alert('Nenhum participante para exportar!');
+                return;
+            }
+
+            let csv = 'Nome,Telefone,Instagram,Data\n';
+            participantes.forEach(p => {
+                csv += `"${p.nome}","${p.telefone}","${p.instagram}","${p.data}"\n`;
             });
-            
+
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
             const url = URL.createObjectURL(blob);
-            
             link.setAttribute('href', url);
-            link.setAttribute('download', `container_degustacao_${new Date().toISOString().split('T')[0]}.csv`);
+            link.setAttribute('download', 'participantes_degustacao.csv');
             link.style.visibility = 'hidden';
-            
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
         }
-        
-        function copyToClipboard() {
-            const entries = loadEntries();
-            if (entries.length === 0) {
-                alert('Nenhum dado para copiar!');
+
+        function copiarLista() {
+            if (participantes.length === 0) {
+                alert('Nenhum participante para copiar!');
                 return;
             }
-            
-            let text = 'CONTAINER DEGUSTAÇÃO 22/04\n';
-            text += '='.repeat(40) + '\n\n';
-            
-            entries.forEach((entry, index) => {
-                text += `${index + 1}. ${entry.nome}\n   📱 ${entry.telefone}\n   📸 ${entry.instagram}\n\n`;
+
+            let texto = 'CONTAINER - DEGUSTAÇÃO BW IMIRIM\n\n';
+            participantes.forEach((p, idx) => {
+                texto += `${idx + 1}. ${p.nome} - ${p.telefone}\n`;
             });
-            
-            navigator.clipboard.writeText(text).then(() => {
-                alert('✓ Lista copiada para a área de transferência!');
+
+            navigator.clipboard.writeText(texto).then(() => {
+                alert('Lista copiada! Cole em qualquer lugar.');
+            }).catch(() => {
+                alert('Erro ao copiar. Tente novamente.');
             });
         }
-        
-        function clearAllData() {
-            if (confirm('⚠️ Tem certeza que quer limpar TODOS os dados? Isso não pode ser desfeito!')) {
-                localStorage.removeItem(STORAGE_KEY);
-                updateDisplay();
-                alert('✓ Todos os dados foram apagados.');
+
+        function confirmarLimpeza() {
+            if (confirm('⚠️ Tem certeza? Isso vai apagar TODOS os dados. Não há volta!')) {
+                participantes = [];
+                localStorage.removeItem('degustacao_participantes');
+                atualizarPainel();
+                reiniciarFormulario();
+                alert('✅ Dados apagados com sucesso!');
             }
         }
-        
-        document.getElementById('formDados').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const nome = document.getElementById('nome').value;
-            const telefone = document.getElementById('telefone').value;
-            
-            formData.nome = nome;
-            formData.telefone = telefone;
-            
-            document.getElementById('displayNome').textContent = nome;
-            document.getElementById('displayTelefone').textContent = formatPhone(telefone);
-            
-            proximoStep(2);
-        });
-        
-        document.getElementById('btnContinuarInstagram').addEventListener('click', function(e) {
-            if (this.disabled) {
-                e.preventDefault();
-                return;
-            }
-            
-            addEntry(formData.nome, formData.telefone);
-            
-            document.getElementById('successMessage').style.display = 'block';
-            setTimeout(() => {
-                document.getElementById('successMessage').style.display = 'none';
-            }, 3000);
-            
-            proximoStep(3);
-        });
-        
-        updateDisplay();
     </script>
 </body>
 </html>
