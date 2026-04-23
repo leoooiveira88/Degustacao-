@@ -253,6 +253,81 @@
         .hidden {
             display: none;
         }
+
+        /* CONSENTIMENTO LGPD */
+        .lgpd-consent {
+            margin-bottom: 0;
+        }
+
+        .consent-box {
+            background: #f8f9fa;
+            border: 1.5px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .consent-label {
+            display: flex;
+            gap: 12px;
+            cursor: pointer;
+            align-items: flex-start;
+        }
+
+        .consent-label input[type="checkbox"] {
+            width: auto;
+            min-width: 20px;
+            height: 20px;
+            margin-top: 2px;
+            cursor: pointer;
+            accent-color: #6b2d7d;
+        }
+
+        .consent-text {
+            font-size: 13px;
+            color: #2c3e50;
+            line-height: 1.5;
+            display: block;
+            padding-top: 2px;
+        }
+
+        .consent-footer {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-top: 10px;
+            padding-left: 32px;
+        }
+
+        .consent-footer a {
+            color: #6b2d7d;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .consent-footer a:hover {
+            color: #522150;
+            text-decoration: underline;
+        }
+
+        #btnAceitarConsent {
+            margin-top: 0;
+        }
+
+        /* RODAPÉ */
+        .rodape-privacidade {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+            font-size: 12px;
+            color: #7f8c8d;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        .rodape-privacidade strong {
+            color: #2c3e50;
+        }
     </style>
 </head>
 <body>
@@ -267,12 +342,31 @@
 
         <div class="divider"></div>
 
-        <div class="step-indicator">
-            <span id="stepText">Passo 1 de 3</span>
+        <!-- CONSENTIMENTO LGPD -->
+        <div class="lgpd-consent" id="consentSection">
+            <div class="consent-box">
+                <label class="consent-label">
+                    <input type="checkbox" id="consentCheckbox" required>
+                    <span class="consent-text">
+                        Concordo em participar do sorteio e autorizo o Container Fast & Good a coletar meus dados (nome e telefone) para contato sobre resultado do sorteio e futuras promoções, conforme LGPD.
+                    </span>
+                </label>
+                <p class="consent-footer">
+                    <a href="#" onclick="mostrarPolitica(); return false;">Leia nossa Política de Privacidade</a>
+                </p>
+            </div>
+            <button onclick="aceitarConsentimento()" id="btnAceitarConsent">Prosseguir</button>
         </div>
 
-        <!-- STEP 1: Dados Básicos -->
-        <div class="form-step active" id="step1">
+        <!-- FORMULÁRIO (INICIALMENTE OCULTO) -->
+        <div id="formularioContainer" class="hidden">
+
+            <div class="step-indicator">
+                <span id="stepText">Passo 1 de 3</span>
+            </div>
+
+            <!-- STEP 1: Dados Básicos -->
+            <div class="form-step active" id="step1">
             <div class="form-group">
                 <label for="nome">Nome completo *</label>
                 <input type="text" id="nome" placeholder="Seu nome" required>
@@ -334,16 +428,85 @@
                 <button class="admin-btn clear-btn" onclick="confirmarLimpeza()">🗑️ Limpar Tudo</button>
             </div>
         </div>
+
+            </div>
+        </div>
+
+        <!-- RODAPÉ LGPD -->
+        <div class="rodape-privacidade">
+            <strong>🔒 Sua privacidade é importante</strong><br>
+            Usamos seus dados apenas para contato do sorteio e promoções. Você pode se opor a qualquer momento via WhatsApp (11) 99118-5338.
+        </div>
     </div>
 
     <script>
         // Dados em memória (Local Storage)
         let participantes = [];
+        let consentimentoAceito = false;
+
+        // CONFIGURAÇÃO GOOGLE SHEETS
+        const GOOGLE_SHEETS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxgorwnc7T8Ln3PdgYWjpQmgt1HmcupP__fv_48ARjeT3l0wyK4QNCbHJY8OWkE-6Ok/exec';
 
         // Carregar dados ao abrir página
         window.addEventListener('load', () => {
+            verificarConsentimento();
             carregarDados();
         });
+
+        function verificarConsentimento() {
+            const consentSalvo = localStorage.getItem('degustacao_consentimento_aceito');
+            if (consentSalvo === 'true') {
+                consentimentoAceito = true;
+                mostrarFormulario();
+            }
+        }
+
+        function aceitarConsentimento() {
+            const checkbox = document.getElementById('consentCheckbox');
+            if (!checkbox.checked) {
+                alert('Por favor, leia e aceite a política de privacidade para prosseguir.');
+                return;
+            }
+            
+            consentimentoAceito = true;
+            localStorage.setItem('degustacao_consentimento_aceito', 'true');
+            document.getElementById('consentSection').classList.add('hidden');
+            mostrarFormulario();
+        }
+
+        function mostrarFormulario() {
+            document.getElementById('formularioContainer').classList.remove('hidden');
+        }
+
+        function mostrarPolitica() {
+            const politica = `
+POLÍTICA DE PRIVACIDADE - CONTAINER FAST & GOOD
+Sorteio de Kit Marmitas - Degustação BW Imirim
+
+1. COLETA DE DADOS
+Coletamos seu nome e telefone para:
+- Comunicar resultado do sorteio
+- Oferecer promoções e novidades do Container Fast & Good
+- Contato via WhatsApp
+
+2. BASE LEGAL
+Seu consentimento (LGPD - Lei 13.709/2018)
+
+3. DIREITOS DO PARTICIPANTE
+Você pode:
+- Acessar seus dados
+- Solicitar exclusão
+- Revogar consentimento a qualquer momento
+Contato: (11) 99118-5338
+
+4. SEGURANÇA
+Seus dados são armazenados com segurança e não serão compartilhados com terceiros.
+
+5. VIGÊNCIA
+Este consentimento é válido por 12 meses, podendo ser renovado.
+            `;
+            alert(politica);
+        }
 
         function carregarDados() {
             try {
@@ -366,6 +529,32 @@
             }
         }
 
+        function enviarParaGoogleSheets(nome, telefone, instagram, data) {
+            const dados = {
+                nome: nome,
+                telefone: telefone,
+                instagram: instagram,
+                data: data
+            };
+
+            // Enviar para Google Sheets
+            fetch(GOOGLE_SHEETS_WEB_APP_URL, {
+                method: 'POST',
+                body: JSON.stringify(dados)
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    console.log('✅ Dados enviados para Google Sheets com sucesso!');
+                } else {
+                    console.log('⚠️ Erro ao enviar para Google Sheets:', result.error);
+                }
+            })
+            .catch(error => {
+                console.log('⚠️ Erro na conexão com Google Sheets:', error);
+            });
+        }
+
         function proximoStep() {
             const stepAtual = document.querySelector('.form-step.active');
             const stepAtualNum = parseInt(stepAtual.id.replace('step', ''));
@@ -383,15 +572,21 @@
             } else if (stepAtualNum === 2) {
                 const nome = document.getElementById('nome').value.trim();
                 const telefone = formatarTelefone(document.getElementById('telefone').value.trim());
+                const dataAgora = new Date().toLocaleString('pt-BR');
 
-                // Salvar participante
-                participantes.push({
+                // Salvar participante localmente (backup)
+                const novoParticipante = {
                     nome: nome,
                     telefone: telefone,
                     instagram: '@containerfastgood',
-                    data: new Date().toLocaleString('pt-BR')
-                });
+                    data: dataAgora,
+                    consentimento_lgpd: true
+                };
+                participantes.push(novoParticipante);
                 salvarDados();
+
+                // Enviar para Google Sheets
+                enviarParaGoogleSheets(nome, telefone, '@containerfastgood', dataAgora);
 
                 // Mostrar confirmação
                 document.getElementById('nomeFinal').textContent = nome;
@@ -445,9 +640,9 @@
                 return;
             }
 
-            let csv = 'Nome,Telefone,Instagram,Data\n';
+            let csv = 'Nome,Telefone,Instagram,Data,Consentimento LGPD\n';
             participantes.forEach(p => {
-                csv += `"${p.nome}","${p.telefone}","${p.instagram}","${p.data}"\n`;
+                csv += `"${p.nome}","${p.telefone}","${p.instagram}","${p.data}","${p.consentimento_lgpd ? 'SIM' : 'NÃO'}"\n`;
             });
 
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
@@ -480,12 +675,12 @@
         }
 
         function confirmarLimpeza() {
-            if (confirm('⚠️ Tem certeza? Isso vai apagar TODOS os dados. Não há volta!')) {
+            if (confirm('⚠️ Tem certeza? Isso vai apagar TODOS os dados locais. Não há volta! (Dados no Google Sheets não serão afetados)')) {
                 participantes = [];
                 localStorage.removeItem('degustacao_participantes');
                 atualizarPainel();
                 reiniciarFormulario();
-                alert('✅ Dados apagados com sucesso!');
+                alert('✅ Dados locais apagados com sucesso!');
             }
         }
     </script>
