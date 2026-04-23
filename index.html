@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Container Fast & Good - Sorteio de Kit Marmitas</title>
+    <title>Container Fast & Good - Sorteio</title>
     <style>
         * {
             margin: 0;
@@ -12,7 +12,7 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #f5f0fa 0%, #e8dff5 100%);
             min-height: 100vh;
             display: flex;
@@ -36,28 +36,25 @@
         }
 
         .logo {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .logo img {
-            max-width: 140px;
+            max-width: 100px;
             height: auto;
-            display: block;
-            margin: 0 auto;
         }
 
         .title {
             font-size: 24px;
             font-weight: 700;
             color: #2c3e50;
-            margin-bottom: 10px;
-            line-height: 1.3;
+            margin-bottom: 8px;
         }
 
         .subtitle {
             font-size: 14px;
             color: #7f8c8d;
-            line-height: 1.5;
+            line-height: 1.4;
         }
 
         .divider {
@@ -71,14 +68,13 @@
             font-size: 13px;
             color: #95a5a6;
             margin-bottom: 20px;
-            font-weight: 500;
         }
 
-        .form-step {
+        .form-section {
             display: none;
         }
 
-        .form-step.active {
+        .form-section.active {
             display: block;
         }
 
@@ -94,24 +90,49 @@
             color: #2c3e50;
         }
 
-        input {
+        input[type="text"],
+        input[type="tel"] {
             width: 100%;
-            padding: 12px 14px;
+            padding: 12px;
             border: 1.5px solid #ddd;
             border-radius: 6px;
             font-size: 15px;
-            transition: all 0.3s ease;
-            font-family: inherit;
+            transition: border-color 0.3s;
         }
 
-        input:focus {
+        input[type="text"]:focus,
+        input[type="tel"]:focus {
             outline: none;
             border-color: #6b2d7d;
             box-shadow: 0 0 0 3px rgba(107, 45, 125, 0.1);
         }
 
-        input::placeholder {
-            color: #bdc3c7;
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-right: 10px;
+            accent-color: #6b2d7d;
+            cursor: pointer;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 13px;
+            color: #2c3e50;
+            line-height: 1.5;
+        }
+
+        .policy-link {
+            color: #6b2d7d;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .policy-link:hover {
+            text-decoration: underline;
         }
 
         button {
@@ -124,8 +145,8 @@
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 10px;
+            transition: all 0.3s;
+            margin-top: 15px;
         }
 
         button:hover {
@@ -134,25 +155,32 @@
             box-shadow: 0 4px 12px rgba(107, 45, 125, 0.3);
         }
 
-        button:active {
-            transform: translateY(0);
+        button:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
         }
 
-        .instagram-link {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 8px 12px;
+        .instagram-cta {
             background: #E1306C;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .instagram-cta a {
             color: white;
             text-decoration: none;
-            border-radius: 4px;
-            font-size: 13px;
             font-weight: 600;
-            transition: background 0.3s;
+            display: inline-block;
+            padding: 10px 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
         }
 
-        .instagram-link:hover {
-            background: #c9175b;
+        .instagram-cta a:hover {
+            background: rgba(0, 0, 0, 0.3);
         }
 
         .confirmation {
@@ -160,8 +188,8 @@
             border: 1px solid #c3e6cb;
             border-radius: 8px;
             padding: 20px;
-            margin-bottom: 20px;
             text-align: center;
+            margin-bottom: 20px;
         }
 
         .confirmation h2 {
@@ -173,7 +201,19 @@
         .confirmation p {
             color: #155724;
             font-size: 14px;
-            line-height: 1.5;
+        }
+
+        .user-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+
+        .user-info strong {
+            color: #2c3e50;
         }
 
         .admin-panel {
@@ -186,38 +226,37 @@
 
         .admin-panel h3 {
             color: #2c3e50;
-            font-size: 16px;
             margin-bottom: 15px;
+            font-size: 16px;
         }
 
         .counter {
-            text-align: center;
-            font-size: 32px;
+            font-size: 28px;
             font-weight: bold;
             color: #6b2d7d;
-            margin-bottom: 15px;
+            text-align: center;
             padding: 15px;
             background: white;
             border-radius: 6px;
+            margin-bottom: 15px;
         }
 
         .participant-list {
-            max-height: 300px;
+            max-height: 250px;
             overflow-y: auto;
             background: white;
             border-radius: 6px;
             padding: 10px;
             margin-bottom: 15px;
+            font-size: 13px;
         }
 
         .participant-item {
-            padding: 10px;
+            padding: 8px;
             margin-bottom: 8px;
-            background: #fff;
             border-left: 3px solid #6b2d7d;
             border-radius: 4px;
-            font-size: 13px;
-            color: #2c3e50;
+            background: #f8f9fa;
         }
 
         .admin-buttons {
@@ -250,88 +289,27 @@
             background: #c0392b;
         }
 
-        .hidden {
-            display: none;
-        }
-
-        /* CONSENTIMENTO LGPD */
-        .lgpd-consent {
-            margin-bottom: 0;
-        }
-
-        .consent-box {
+        .footer {
+            margin-top: 40px;
+            padding: 20px;
             background: #f8f9fa;
-            border: 1.5px solid #e0e0e0;
             border-radius: 8px;
-            padding: 16px;
-            margin-bottom: 16px;
-        }
-
-        .consent-label {
-            display: flex;
-            gap: 12px;
-            cursor: pointer;
-            align-items: flex-start;
-        }
-
-        .consent-label input[type="checkbox"] {
-            width: auto;
-            min-width: 20px;
-            height: 20px;
-            margin-top: 2px;
-            cursor: pointer;
-            accent-color: #6b2d7d;
-        }
-
-        .consent-text {
-            font-size: 13px;
-            color: #2c3e50;
-            line-height: 1.5;
-            display: block;
-            padding-top: 2px;
-        }
-
-        .consent-footer {
-            font-size: 12px;
-            color: #7f8c8d;
-            margin-top: 10px;
-            padding-left: 32px;
-        }
-
-        .consent-footer a {
-            color: #6b2d7d;
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s;
-        }
-
-        .consent-footer a:hover {
-            color: #522150;
-            text-decoration: underline;
-        }
-
-        #btnAceitarConsent {
-            margin-top: 0;
-        }
-
-        /* RODAPÉ */
-        .rodape-privacidade {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #e0e0e0;
-            font-size: 12px;
-            color: #7f8c8d;
             text-align: center;
-            line-height: 1.5;
+            font-size: 13px;
+            color: #7f8c8d;
+            line-height: 1.6;
         }
 
-        .rodape-privacidade strong {
+        .footer strong {
             color: #2c3e50;
+            display: block;
+            margin-bottom: 8px;
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- HEADER -->
         <div class="header">
             <div class="logo">
                 <img src="logo_container.jpg" alt="Container Fast & Good">
@@ -342,224 +320,162 @@
 
         <div class="divider"></div>
 
-        <!-- CONSENTIMENTO LGPD -->
-        <div class="lgpd-consent" id="consentSection">
-            <div class="consent-box">
-                <label class="consent-label">
-                    <input type="checkbox" id="consentCheckbox" required>
-                    <span class="consent-text">
-                        Concordo em participar do sorteio e autorizo o Container Fast & Good a coletar meus dados (nome e telefone) para contato sobre resultado do sorteio e futuras promoções, conforme LGPD.
-                    </span>
+        <!-- STEP 1: CONSENTIMENTO LGPD -->
+        <div class="form-section active" id="step-consent">
+            <div class="step-indicator">Passo 1 de 3</div>
+            
+            <div class="form-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="consentCheckbox">
+                    <span>Concordo em participar do sorteio e autorizo o Container Fast & Good a coletar meus dados (nome e telefone) para contato sobre resultado do sorteio e futuras promoções, conforme LGPD. <a href="javascript:showPolicy();" class="policy-link">Leia nossa Política de Privacidade</a></span>
                 </label>
-                <p class="consent-footer">
-                    <a href="#" onclick="mostrarPolitica(); return false;">Leia nossa Política de Privacidade</a>
-                </p>
             </div>
-            <button onclick="aceitarConsentimento()" id="btnAceitarConsent">Prosseguir</button>
+
+            <button onclick="nextStep()">Prosseguir</button>
         </div>
 
-        <!-- FORMULÁRIO (INICIALMENTE OCULTO) -->
-        <div id="formularioContainer" class="hidden">
+        <!-- STEP 2: DADOS BÁSICOS -->
+        <div class="form-section" id="step-form">
+            <div class="step-indicator">Passo 2 de 3</div>
 
-            <div class="step-indicator">
-                <span id="stepText">Passo 1 de 3</span>
-            </div>
-
-            <!-- STEP 1: Dados Básicos -->
-            <div class="form-step active" id="step1">
             <div class="form-group">
                 <label for="nome">Nome completo *</label>
                 <input type="text" id="nome" placeholder="Seu nome" required>
             </div>
+
             <div class="form-group">
                 <label for="telefone">Telefone *</label>
                 <input type="tel" id="telefone" placeholder="(11) 99999-9999" required>
             </div>
-            <button onclick="proximoStep()">Continuar</button>
+
+            <button onclick="nextStep()">Continuar</button>
         </div>
 
-        <!-- STEP 2: Instagram -->
-        <div class="form-step" id="step2">
-            <div class="form-group">
-                <p style="color: #2c3e50; margin-bottom: 15px; font-weight: 500;">
-                    ✅ Siga nosso Instagram para concorrer ao sorteio:
-                </p>
-                <a href="https://www.instagram.com/containerfastgood/" target="_blank" class="instagram-link">
-                    🔗 @containerfastgood
-                </a>
-                <p style="color: #7f8c8d; font-size: 13px; margin-top: 12px;">
-                    Clique no link acima, siga nossa conta e depois clique em "Continuar" abaixo.
-                </p>
+        <!-- STEP 3: INSTAGRAM -->
+        <div class="form-section" id="step-instagram">
+            <div class="step-indicator">Passo 3 de 3</div>
+
+            <div class="instagram-cta">
+                <p style="color: white; margin-bottom: 10px; font-weight: 600;">Siga nosso Instagram para concorrer!</p>
+                <a href="https://www.instagram.com/containerfastgood/" target="_blank">🔗 @containerfastgood</a>
             </div>
-            <button onclick="proximoStep()">Continuar</button>
+
+            <p style="color: #7f8c8d; text-align: center; margin-bottom: 20px; font-size: 13px;">
+                Clique no link acima, siga nossa conta e depois clique em "Finalizar"
+            </p>
+
+            <button onclick="finalizeRegistration()">Finalizar Registro</button>
         </div>
 
-        <!-- STEP 3: Confirmação -->
-        <div class="form-step" id="step3">
+        <!-- STEP 4: CONFIRMAÇÃO -->
+        <div class="form-section" id="step-confirmation">
+            <div class="step-indicator">Concluído!</div>
+
             <div class="confirmation">
                 <h2>🎉 Parabéns!</h2>
                 <p>Você foi registrado no sorteio!</p>
             </div>
-            <div class="form-group">
-                <p style="color: #2c3e50; font-size: 14px; text-align: center;">
-                    <strong>Nome:</strong> <span id="nomeFinal"></span><br>
-                    <strong>Telefone:</strong> <span id="telefoneFinal"></span>
-                </p>
+
+            <div class="user-info">
+                <strong>Nome:</strong> <span id="displayNome"></span><br>
+                <strong>Telefone:</strong> <span id="displayTelefone"></span>
             </div>
-            <button onclick="reiniciarFormulario()" style="background: #6b2d7d;">Registrar Novo Participante</button>
+
+            <button onclick="resetForm()" style="background: #6b2d7d;">Registrar Outro Participante</button>
         </div>
 
         <!-- PAINEL ADMINISTRATIVO -->
         <div class="admin-panel">
             <h3>📊 Painel Administrativo</h3>
-            
-            <div class="counter">
-                <span id="totalParticipantes">0</span>
-            </div>
 
-            <p style="font-size: 13px; color: #7f8c8d; margin-bottom: 10px;">Últimos registros:</p>
+            <div class="counter" id="counter">0</div>
+
+            <p style="font-size: 12px; color: #7f8c8d; margin-bottom: 10px;">Últimos registros:</p>
             <div class="participant-list" id="participantList">
-                <p style="color: #95a5a6; font-size: 13px; padding: 10px;">Nenhum registro ainda.</p>
+                <p style="color: #95a5a6;">Nenhum registro ainda.</p>
             </div>
 
             <div class="admin-buttons">
-                <button class="admin-btn" onclick="exportarCSV()">📥 Exportar CSV</button>
-                <button class="admin-btn" onclick="copiarLista()">📋 Copiar Lista</button>
-                <button class="admin-btn clear-btn" onclick="confirmarLimpeza()">🗑️ Limpar Tudo</button>
+                <button class="admin-btn" onclick="exportCSV()">📥 Exportar CSV</button>
+                <button class="admin-btn" onclick="copyList()">📋 Copiar Lista</button>
+                <button class="admin-btn clear-btn" onclick="clearData()">🗑️ Limpar Dados</button>
             </div>
         </div>
 
-            </div>
-        </div>
-
-        <!-- RODAPÉ LGPD -->
-        <div class="rodape-privacidade">
-            <strong>🔒 Sua privacidade é importante</strong><br>
+        <!-- RODAPÉ -->
+        <div class="footer">
+            <strong>🔒 Sua privacidade é importante</strong>
             Usamos seus dados apenas para contato do sorteio e promoções. Você pode se opor a qualquer momento via WhatsApp (11) 99118-5338.
         </div>
     </div>
 
     <script>
-        // Dados em memória (Local Storage)
-        let participantes = [];
-        let consentimentoAceito = false;
+        const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxgorwnc7T8Ln3PdgYWjpQmgt1HmcupP__fv_48ARjeT3l0wyK4QNCbHJY8OWkE-6Ok/exec';
+        let participants = [];
 
-        // CONFIGURAÇÃO GOOGLE SHEETS
-        const GOOGLE_SHEETS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxgorwnc7T8Ln3PdgYWjpQmgt1HmcupP__fv_48ARjeT3l0wyK4QNCbHJY8OWkE-6Ok/exec';
-
-        // Carregar dados ao abrir página
-        window.addEventListener('load', () => {
-            verificarConsentimento();
-            carregarDados();
+        window.addEventListener('load', function() {
+            loadParticipants();
         });
 
-        function verificarConsentimento() {
-            const consentSalvo = localStorage.getItem('degustacao_consentimento_aceito');
-            if (consentSalvo === 'true') {
-                consentimentoAceito = true;
-                mostrarFormulario();
+        function loadParticipants() {
+            try {
+                const data = localStorage.getItem('participants');
+                if (data) {
+                    participants = JSON.parse(data);
+                }
+            } catch (e) {
+                console.log('Erro ao carregar dados');
+            }
+            updatePanel();
+        }
+
+        function saveParticipants() {
+            try {
+                localStorage.setItem('participants', JSON.stringify(participants));
+            } catch (e) {
+                console.log('Erro ao salvar dados');
             }
         }
 
-        function aceitarConsentimento() {
-            const checkbox = document.getElementById('consentCheckbox');
-            if (!checkbox.checked) {
-                alert('Por favor, leia e aceite a política de privacidade para prosseguir.');
-                return;
-            }
-            
-            consentimentoAceito = true;
-            localStorage.setItem('degustacao_consentimento_aceito', 'true');
-            document.getElementById('consentSection').classList.add('hidden');
-            mostrarFormulario();
-        }
-
-        function mostrarFormulario() {
-            document.getElementById('formularioContainer').classList.remove('hidden');
-        }
-
-        function mostrarPolitica() {
-            const politica = `
-POLÍTICA DE PRIVACIDADE - CONTAINER FAST & GOOD
-Sorteio de Kit Marmitas - Degustação BW Imirim
+        function showPolicy() {
+            alert(`POLÍTICA DE PRIVACIDADE - CONTAINER FAST & GOOD
 
 1. COLETA DE DADOS
 Coletamos seu nome e telefone para:
 - Comunicar resultado do sorteio
-- Oferecer promoções e novidades do Container Fast & Good
+- Oferecer promoções do Container Fast & Good
 - Contato via WhatsApp
 
 2. BASE LEGAL
 Seu consentimento (LGPD - Lei 13.709/2018)
 
-3. DIREITOS DO PARTICIPANTE
+3. DIREITOS
 Você pode:
 - Acessar seus dados
 - Solicitar exclusão
-- Revogar consentimento a qualquer momento
+- Revogar consentimento
 Contato: (11) 99118-5338
 
 4. SEGURANÇA
-Seus dados são armazenados com segurança e não serão compartilhados com terceiros.
+Dados armazenados com segurança.
+Não compartilhamos com terceiros.
 
 5. VIGÊNCIA
-Este consentimento é válido por 12 meses, podendo ser renovado.
-            `;
-            alert(politica);
+Consentimento válido por 12 meses.`);
         }
 
-        function carregarDados() {
-            try {
-                const dados = localStorage.getItem('degustacao_participantes');
-                if (dados) {
-                    participantes = JSON.parse(dados);
+        function nextStep() {
+            const activeSection = document.querySelector('.form-section.active');
+            const activeId = activeSection.id;
+
+            if (activeId === 'step-consent') {
+                if (!document.getElementById('consentCheckbox').checked) {
+                    alert('Por favor, aceite a política de privacidade para continuar.');
+                    return;
                 }
-            } catch (e) {
-                console.log('Usando memória temporária');
-                participantes = [];
+                showStep('step-form');
             }
-            atualizarPainel();
-        }
-
-        function salvarDados() {
-            try {
-                localStorage.setItem('degustacao_participantes', JSON.stringify(participantes));
-            } catch (e) {
-                console.log('Dados salvos em memória temporária');
-            }
-        }
-
-        function enviarParaGoogleSheets(nome, telefone, instagram, data) {
-            const dados = {
-                nome: nome,
-                telefone: telefone,
-                instagram: instagram,
-                data: data
-            };
-
-            // Enviar para Google Sheets
-            fetch(GOOGLE_SHEETS_WEB_APP_URL, {
-                method: 'POST',
-                body: JSON.stringify(dados)
-            })
-            .then(response => response.json())
-            .then(result => {
-                if (result.success) {
-                    console.log('✅ Dados enviados para Google Sheets com sucesso!');
-                } else {
-                    console.log('⚠️ Erro ao enviar para Google Sheets:', result.error);
-                }
-            })
-            .catch(error => {
-                console.log('⚠️ Erro na conexão com Google Sheets:', error);
-            });
-        }
-
-        function proximoStep() {
-            const stepAtual = document.querySelector('.form-step.active');
-            const stepAtualNum = parseInt(stepAtual.id.replace('step', ''));
-
-            if (stepAtualNum === 1) {
+            else if (activeId === 'step-form') {
                 const nome = document.getElementById('nome').value.trim();
                 const telefone = document.getElementById('telefone').value.trim();
 
@@ -568,119 +484,117 @@ Este consentimento é válido por 12 meses, podendo ser renovado.
                     return;
                 }
 
-                document.getElementById('stepText').textContent = 'Passo 2 de 3';
-            } else if (stepAtualNum === 2) {
-                const nome = document.getElementById('nome').value.trim();
-                const telefone = formatarTelefone(document.getElementById('telefone').value.trim());
-                const dataAgora = new Date().toLocaleString('pt-BR');
-
-                // Salvar participante localmente (backup)
-                const novoParticipante = {
-                    nome: nome,
-                    telefone: telefone,
-                    instagram: '@containerfastgood',
-                    data: dataAgora,
-                    consentimento_lgpd: true
-                };
-                participantes.push(novoParticipante);
-                salvarDados();
-
-                // Enviar para Google Sheets
-                enviarParaGoogleSheets(nome, telefone, '@containerfastgood', dataAgora);
-
-                // Mostrar confirmação
-                document.getElementById('nomeFinal').textContent = nome;
-                document.getElementById('telefoneFinal').textContent = telefone;
-                document.getElementById('stepText').textContent = 'Passo 3 de 3';
-                atualizarPainel();
-            }
-
-            // Esconder passo atual e mostrar próximo
-            stepAtual.classList.remove('active');
-            const proximoNum = stepAtualNum + 1;
-            if (document.getElementById(`step${proximoNum}`)) {
-                document.getElementById(`step${proximoNum}`).classList.add('active');
+                showStep('step-instagram');
             }
         }
 
-        function reiniciarFormulario() {
-            document.querySelectorAll('.form-step').forEach(step => step.classList.remove('active'));
-            document.getElementById('step1').classList.add('active');
-            document.getElementById('stepText').textContent = 'Passo 1 de 3';
+        function finalizeRegistration() {
+            const nome = document.getElementById('nome').value.trim();
+            const telefone = formatPhone(document.getElementById('telefone').value.trim());
+
+            const participant = {
+                nome: nome,
+                telefone: telefone,
+                instagram: '@containerfastgood',
+                data: new Date().toLocaleString('pt-BR'),
+                lgpd: 'SIM'
+            };
+
+            participants.push(participant);
+            saveParticipants();
+            sendToGoogleSheets(participant);
+
+            document.getElementById('displayNome').textContent = nome;
+            document.getElementById('displayTelefone').textContent = telefone;
+
+            showStep('step-confirmation');
+            updatePanel();
+        }
+
+        function sendToGoogleSheets(participant) {
+            fetch(GOOGLE_SHEETS_URL, {
+                method: 'POST',
+                body: JSON.stringify(participant)
+            })
+            .then(response => response.json())
+            .catch(error => console.log('Erro ao enviar:', error));
+        }
+
+        function resetForm() {
             document.getElementById('nome').value = '';
             document.getElementById('telefone').value = '';
+            document.getElementById('consentCheckbox').checked = false;
+            showStep('step-consent');
         }
 
-        function formatarTelefone(tel) {
+        function formatPhone(tel) {
             return tel.replace(/\D/g, '').replace(/(\d{2})(\d{4,5})(\d{4})/, '($1) $2-$3');
         }
 
-        function atualizarPainel() {
-            document.getElementById('totalParticipantes').textContent = participantes.length;
+        function showStep(stepId) {
+            document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+            document.getElementById(stepId).classList.add('active');
+        }
 
-            const lista = document.getElementById('participantList');
-            if (participantes.length === 0) {
-                lista.innerHTML = '<p style="color: #95a5a6; font-size: 13px; padding: 10px;">Nenhum registro ainda.</p>';
+        function updatePanel() {
+            document.getElementById('counter').textContent = participants.length;
+
+            const list = document.getElementById('participantList');
+            if (participants.length === 0) {
+                list.innerHTML = '<p style="color: #95a5a6;">Nenhum registro ainda.</p>';
                 return;
             }
 
-            // Mostrar últimos 10
-            const ultimos = participantes.slice(-10).reverse();
-            lista.innerHTML = ultimos.map((p, idx) => `
+            const recent = participants.slice(-10).reverse();
+            list.innerHTML = recent.map(p => `
                 <div class="participant-item">
-                    <strong>${p.nome}</strong><br>
-                    ${p.telefone} | ${p.data}
+                    <strong>${p.nome}</strong> - ${p.telefone}<br>
+                    <small>${p.data}</small>
                 </div>
             `).join('');
         }
 
-        function exportarCSV() {
-            if (participantes.length === 0) {
+        function exportCSV() {
+            if (participants.length === 0) {
                 alert('Nenhum participante para exportar!');
                 return;
             }
 
-            let csv = 'Nome,Telefone,Instagram,Data,Consentimento LGPD\n';
-            participantes.forEach(p => {
-                csv += `"${p.nome}","${p.telefone}","${p.instagram}","${p.data}","${p.consentimento_lgpd ? 'SIM' : 'NÃO'}"\n`;
+            let csv = 'Nome,Telefone,Instagram,Data,LGPD\n';
+            participants.forEach(p => {
+                csv += `"${p.nome}","${p.telefone}","${p.instagram}","${p.data}","${p.lgpd}"\n`;
             });
 
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
-            const url = URL.createObjectURL(blob);
-            link.setAttribute('href', url);
-            link.setAttribute('download', 'participantes_degustacao.csv');
-            link.style.visibility = 'hidden';
-            document.body.appendChild(link);
+            link.href = URL.createObjectURL(blob);
+            link.download = 'participantes_degustacao.csv';
             link.click();
-            document.body.removeChild(link);
         }
 
-        function copiarLista() {
-            if (participantes.length === 0) {
+        function copyList() {
+            if (participants.length === 0) {
                 alert('Nenhum participante para copiar!');
                 return;
             }
 
-            let texto = 'CONTAINER - DEGUSTAÇÃO BW IMIRIM\n\n';
-            participantes.forEach((p, idx) => {
-                texto += `${idx + 1}. ${p.nome} - ${p.telefone}\n`;
+            let text = 'CONTAINER - DEGUSTAÇÃO BW IMIRIM\n\n';
+            participants.forEach((p, i) => {
+                text += `${i + 1}. ${p.nome} - ${p.telefone}\n`;
             });
 
-            navigator.clipboard.writeText(texto).then(() => {
-                alert('Lista copiada! Cole em qualquer lugar.');
-            }).catch(() => {
-                alert('Erro ao copiar. Tente novamente.');
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Lista copiada!');
             });
         }
 
-        function confirmarLimpeza() {
-            if (confirm('⚠️ Tem certeza? Isso vai apagar TODOS os dados locais. Não há volta! (Dados no Google Sheets não serão afetados)')) {
-                participantes = [];
-                localStorage.removeItem('degustacao_participantes');
-                atualizarPainel();
-                reiniciarFormulario();
-                alert('✅ Dados locais apagados com sucesso!');
+        function clearData() {
+            if (confirm('⚠️ Tem certeza? Isso vai apagar todos os dados locais!\n(Dados no Google Sheets não serão afetados)')) {
+                participants = [];
+                localStorage.removeItem('participants');
+                updatePanel();
+                resetForm();
+                alert('Dados apagados!');
             }
         }
     </script>
